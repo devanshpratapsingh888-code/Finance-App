@@ -16,7 +16,7 @@ export const navItems = [
     { icon: CreditCard, label: "Cards", path: "/cards" },
     { icon: PiggyBank, label: "Saving Plans", path: "/savings" },
     { icon: TrendingUp, label: "Investments", path: "/investments" },
-    { icon: Mail, label: "Inbox", path: "/inbox", badge: 4 },
+    { icon: Mail, label: "Inbox", path: "/inbox" },
     { icon: Tag, label: "Promos", path: "/promos" },
     { icon: BarChart3, label: "Insights", path: "/insights" },
 ];
