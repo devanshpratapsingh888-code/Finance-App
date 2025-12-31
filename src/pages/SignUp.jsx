@@ -30,29 +30,65 @@ const SignUp = () => {
                     </div>
                     <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">Create your account</h2>
                     <p className="mt-2 text-center text-sm text-gray-600">
-                        Join the future of finance
+                        Or{' '}
+                        <a href="/login" className="font-medium text-primary hover:text-primary/80" onClick={(e) => {
+                            e.preventDefault();
+                            window.history.pushState({}, '', '/login');
+                            window.dispatchEvent(new PopStateEvent('popstate'));
+                        }}>
+                            sign in to existing account
+                        </a>
                     </p>
                 </div>
-                <div className="rounded-md bg-yellow-50 p-4 text-center">
-                    <h3 className="text-sm font-medium text-yellow-800">Registration Disabled</h3>
-                    <div className="mt-2 text-sm text-yellow-700">
-                        <p>New account registration is currently disabled for this demo.</p>
-                        <p className="mt-2">Please use one of the test accounts provided on the login page.</p>
+                <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
+                    <div className="-space-y-px rounded-md shadow-sm">
+                        <div>
+                            <input
+                                type="text"
+                                required
+                                className="relative block w-full rounded-t-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm sm:leading-6 px-3"
+                                placeholder="Full Name"
+                                value={name}
+                                onChange={(e) => setName(e.target.value)}
+                            />
+                        </div>
+                        <div>
+                            <input
+                                type="email"
+                                required
+                                className="relative block w-full border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm sm:leading-6 px-3"
+                                placeholder="Email address"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                            />
+                        </div>
+                        <div>
+                            <input
+                                type="password"
+                                required
+                                className="relative block w-full rounded-b-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm sm:leading-6 px-3"
+                                placeholder="Password"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                            />
+                        </div>
                     </div>
-                    <div className="mt-4">
-                        <a
-                            href="/login"
-                            className="font-medium text-primary hover:text-primary/80"
-                            onClick={(e) => {
-                                e.preventDefault();
-                                window.history.pushState({}, '', '/login');
-                                window.dispatchEvent(new PopStateEvent('popstate'));
-                            }}
+
+                    {error && (
+                        <div className="text-sm text-red-500 text-center">
+                            {error}
+                        </div>
+                    )}
+
+                    <div>
+                        <button
+                            type="submit"
+                            className="group relative flex w-full justify-center rounded-md bg-primary px-3 py-2 text-sm font-semibold text-white hover:bg-primary/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
                         >
-                            &larr; Back to Login
-                        </a>
+                            Sign up
+                        </button>
                     </div>
-                </div>
+                </form>
             </div>
         </div>
     );

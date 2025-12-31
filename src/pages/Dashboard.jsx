@@ -46,17 +46,7 @@ const Dashboard = () => {
                     <SavingPlans plans={userData.savingPlans} />
                     <ExpenseBreakdown expenses={userData.expensesByCategory} />
                     {/* Promo Card */}
-                    <div className="relative overflow-hidden rounded-xl bg-gray-900 p-6 text-white text-center">
-                        <div className="z-10 relative">
-                            <h3 className="mb-2 text-lg font-bold">Invest into the Future</h3>
-                            <p className="mb-4 text-xs text-gray-400">Get up to 5% cashback on your first investment with Coinest.</p>
-                            <button className="w-full rounded-lg bg-primary py-2 text-sm font-semibold text-white hover:bg-primary-hover">
-                                Start Investing
-                            </button>
-                        </div>
-                        <div className="absolute -right-10 -top-10 h-32 w-32 rounded-full bg-primary/20 blur-2xl"></div>
-                        <div className="absolute -left-10 -bottom-10 h-32 w-32 rounded-full bg-blue-500/20 blur-2xl"></div>
-                    </div>
+
                 </div>
             </div>
         </MainLayout>

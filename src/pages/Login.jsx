@@ -40,7 +40,14 @@ const Login = () => {
                     </div>
                     <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">Sign in to your account</h2>
                     <p className="mt-2 text-center text-sm text-gray-600">
-                        Sign in to access your dashboard
+                        Or{' '}
+                        <a href="/signup" className="font-medium text-primary hover:text-primary/80" onClick={(e) => {
+                            e.preventDefault();
+                            window.history.pushState({}, '', '/signup');
+                            window.dispatchEvent(new PopStateEvent('popstate'));
+                        }}>
+                            create a new account
+                        </a>
                     </p>
                 </div>
                 <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
@@ -83,43 +90,10 @@ const Login = () => {
                         </button>
                     </div>
                 </form>
-                <div className="mt-6 border-t border-gray-100 pt-6">
-                    <p className="mb-4 text-center text-sm text-gray-500">Test Accounts (Click to fill)</p>
-                    <div className="grid gap-3">
-                        <button
-                            onClick={() => { setEmail('user1@coinest.com'); setPassword('password123'); }}
-                            className="flex items-center justify-between rounded-lg border border-gray-200 p-3 text-left hover:border-primary hover:bg-gray-50 transition-colors group"
-                            type="button"
-                        >
-                            <div>
-                                <p className="font-semibold text-gray-900 text-sm">Standard User</p>
-                                <p className="text-xs text-gray-500">user1@coinest.com</p>
-                            </div>
-                            <div className="h-2 w-2 rounded-full bg-green-500"></div>
-                        </button>
-                        <button
-                            onClick={() => { setEmail('user2@coinest.com'); setPassword('password123'); }}
-                            className="flex items-center justify-between rounded-lg border border-gray-200 p-3 text-left hover:border-primary hover:bg-gray-50 transition-colors group"
-                            type="button"
-                        >
-                            <div>
-                                <p className="font-semibold text-gray-900 text-sm">Wealthy User</p>
-                                <p className="text-xs text-gray-500">user2@coinest.com</p>
-                            </div>
-                            <div className="h-2 w-2 rounded-full bg-purple-500"></div>
-                        </button>
-                        <button
-                            onClick={() => { setEmail('user3@coinest.com'); setPassword('password123'); }}
-                            className="flex items-center justify-between rounded-lg border border-gray-200 p-3 text-left hover:border-primary hover:bg-gray-50 transition-colors group"
-                            type="button"
-                        >
-                            <div>
-                                <p className="font-semibold text-gray-900 text-sm">New User</p>
-                                <p className="text-xs text-gray-500">user3@coinest.com</p>
-                            </div>
-                            <div className="h-2 w-2 rounded-full bg-blue-500"></div>
-                        </button>
-                    </div>
+                <div className="text-center text-xs text-gray-500">
+                    <p>Demo Credentials:</p>
+                    <p>Email: demo@example.com</p>
+                    <p>Password: password</p>
                 </div>
             </div>
         </div>
