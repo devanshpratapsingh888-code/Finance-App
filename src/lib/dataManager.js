@@ -75,13 +75,14 @@ export const initializeUser = (userId, name, email, password) => {
 };
 
 // Initialize the "demo" user if not exists, using the full mock data
-export const initializeDemoUser = () => {
+// Initialize all demo and test users
+export const initializeAllUsers = () => {
     const users = getUsers();
-    const demoId = 'demo_user';
 
-    if (!users[demoId]) {
-        users[demoId] = {
-            id: demoId,
+    const allUsers = [
+        // Standard Demo User
+        {
+            id: 'demo_user',
             name: 'Andrew Forbist',
             email: 'demo@example.com',
             password: 'password',
@@ -98,7 +99,78 @@ export const initializeDemoUser = () => {
                 promosData,
                 insightsData
             }
-        };
+        },
+        // Test User 1: Same as demo but distinct login
+        {
+            id: 'user1',
+            name: 'Andrew Forbist (Test)',
+            email: 'user1@coinest.com',
+            password: 'password123',
+            data: {
+                currentUser: defaultUser,
+                recentTransactions,
+                savingPlans,
+                expensesByCategory,
+                cashflowData,
+                invoicesData,
+                cardsData,
+                investmentsData,
+                messagesData,
+                promosData,
+                insightsData
+            }
+        },
+        // Test User 2: Wealthy
+        {
+            id: 'user2',
+            name: 'Sarah Wealthy',
+            email: 'user2@coinest.com',
+            password: 'password123',
+            data: {
+                currentUser: { ...defaultUser, name: 'Sarah Wealthy', balance: 2500000.50, cardNumber: '**** **** **** 9999' },
+                recentTransactions: [],
+                savingPlans: [],
+                expensesByCategory: [],
+                cashflowData: [],
+                invoicesData: [],
+                cardsData: [],
+                investmentsData: [],
+                messagesData: [],
+                promosData: promosData,
+                insightsData: []
+            }
+        },
+        // Test User 3: Fresh/New
+        {
+            id: 'user3',
+            name: 'New User',
+            email: 'user3@coinest.com',
+            password: 'password123',
+            data: {
+                currentUser: { ...defaultUser, name: 'New User', balance: 0.00 },
+                recentTransactions: [],
+                savingPlans: [],
+                expensesByCategory: [],
+                cashflowData: [],
+                invoicesData: [],
+                cardsData: [],
+                investmentsData: [],
+                messagesData: [],
+                promosData: promosData,
+                insightsData: []
+            }
+        }
+    ];
+
+    let changed = false;
+    allUsers.forEach(u => {
+        if (!users[u.id]) {
+            users[u.id] = u;
+            changed = true;
+        }
+    });
+
+    if (changed) {
         saveUsers(users);
     }
 };
