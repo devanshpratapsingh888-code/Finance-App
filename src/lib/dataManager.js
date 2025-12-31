@@ -74,17 +74,17 @@ export const initializeUser = (userId, name, email, password) => {
     return newUser;
 };
 
-// Initialize the test users if not exists
-export const initializeTestUsers = () => {
+// Initialize the "demo" user if not exists, using the full mock data
+export const initializeDemoUser = () => {
     const users = getUsers();
+    const demoId = 'demo_user';
 
-    // Define the test users
-    const testUsers = [
-        {
-            id: 'user1',
+    if (!users[demoId]) {
+        users[demoId] = {
+            id: demoId,
             name: 'Andrew Forbist',
-            email: 'user1@coinest.com',
-            password: 'password123',
+            email: 'demo@example.com',
+            password: 'password',
             data: {
                 currentUser: defaultUser,
                 recentTransactions,
@@ -98,57 +98,7 @@ export const initializeTestUsers = () => {
                 promosData,
                 insightsData
             }
-        },
-        {
-            id: 'user2',
-            name: 'Sarah Wealthy',
-            email: 'user2@coinest.com',
-            password: 'password123',
-            data: {
-                currentUser: { ...defaultUser, name: 'Sarah Wealthy', balance: 2500000.50, cardNumber: '**** **** **** 9999' },
-                // Use empty/different data where possible to show isolation, but for now we'll just re-use empty arrays or let them generate default
-                recentTransactions: [],
-                savingPlans: [],
-                expensesByCategory: [],
-                cashflowData: [],
-                invoicesData: [],
-                cardsData: [],
-                investmentsData: [],
-                messagesData: [],
-                promosData: promosData,
-                insightsData: []
-            }
-        },
-        {
-            id: 'user3',
-            name: 'New User',
-            email: 'user3@coinest.com',
-            password: 'password123',
-            data: {
-                currentUser: { ...defaultUser, name: 'New User', balance: 0.00 },
-                recentTransactions: [],
-                savingPlans: [],
-                expensesByCategory: [],
-                cashflowData: [],
-                invoicesData: [],
-                cardsData: [],
-                investmentsData: [],
-                messagesData: [],
-                promosData: promosData,
-                insightsData: []
-            }
-        }
-    ];
-
-    let changed = false;
-    testUsers.forEach(u => {
-        if (!users[u.id]) {
-            users[u.id] = u;
-            changed = true;
-        }
-    });
-
-    if (changed) {
+        };
         saveUsers(users);
     }
 };
