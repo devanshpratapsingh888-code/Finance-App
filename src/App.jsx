@@ -1,5 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { AuthProvider, useAuth } from './context/AuthContext';
 import Dashboard from './pages/Dashboard';
+import Login from './pages/Login';
+import SignUp from './pages/SignUp';
 import Transactions from './pages/Transactions';
 import Invoices from './pages/Invoices';
 import Cards from './pages/Cards';
@@ -10,10 +13,12 @@ import Promos from './pages/Promos';
 import Insights from './pages/Insights';
 import PlaceholderPage from './pages/PlaceholderPage';
 
-function App() {
+// Internal component to consume AuthContext
+const AppContent = () => {
   const [currentPath, setCurrentPath] = useState(window.location.pathname);
+  const { currentUser, loading } = useAuth();
 
-  React.useEffect(() => {
+  useEffect(() => {
     const handleLocationChange = () => {
       setCurrentPath(window.location.pathname);
     };
@@ -22,7 +27,7 @@ function App() {
     return () => window.removeEventListener('popstate', handleLocationChange);
   }, []);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const handleClick = (e) => {
       const link = e.target.closest('a');
       if (link && link.getAttribute('href') && link.getAttribute('href').startsWith('/')) {
@@ -30,6 +35,7 @@ function App() {
         const path = link.getAttribute('href');
         window.history.pushState({}, '', path);
         setCurrentPath(path);
+        window.dispatchEvent(new PopStateEvent('popstate'));
       }
     };
 
@@ -37,7 +43,30 @@ function App() {
     return () => document.removeEventListener('click', handleClick);
   }, []);
 
+  // Auth Protection Logic
+  useEffect(() => {
+    if (!loading) {
+      if (!currentUser && (currentPath !== '/login' && currentPath !== '/signup')) {
+        window.history.pushState({}, '', '/login');
+        setCurrentPath('/login');
+      } else if (currentUser && (currentPath === '/login' || currentPath === '/signup')) {
+        window.history.pushState({}, '', '/');
+        setCurrentPath('/');
+      }
+    }
+  }, [currentUser, loading, currentPath]);
+
+  if (loading) {
+    return <div className="flex items-center justify-center min-h-screen">Loading...</div>;
+  }
+
   const getPage = () => {
+    // If not logged in, only show public pages
+    if (!currentUser) {
+      if (currentPath === '/signup') return <SignUp />;
+      return <Login />;
+    }
+
     switch (currentPath) {
       case '/':
         return <Dashboard />;
@@ -66,6 +95,14 @@ function App() {
     <>
       {getPage()}
     </>
+  );
+};
+
+function App() {
+  return (
+    <AuthProvider>
+      <AppContent />
+    </AuthProvider>
   );
 }
 

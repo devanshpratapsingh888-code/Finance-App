@@ -6,15 +6,22 @@ import RecentTransactions from '../components/dashboard/RecentTransactions';
 import CashflowChart from '../components/dashboard/CashflowChart';
 import ExpenseBreakdown from '../components/dashboard/ExpenseBreakdown';
 import SavingPlans from '../components/dashboard/SavingPlans';
+import { useAuth } from '../context/AuthContext';
 
 const Dashboard = () => {
+    const { userData, currentUser } = useAuth();
+
+    // If loading or no data yet, should be handled by App.jsx or AuthContext loading state, 
+    // but safe check here.
+    if (!userData) return null;
+
     return (
         <MainLayout title="Overview">
             <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
                 {/* Left Column */}
                 <div className="space-y-6 lg:col-span-2">
                     <div className="grid gap-6 md:grid-cols-2">
-                        <BalanceCard />
+                        <BalanceCard currentUser={userData.currentUser} />
                         <div className="flex flex-col gap-6">
                             <QuickActions />
                             {/* Placeholder for Daily Limit or another small widget */}
@@ -30,14 +37,14 @@ const Dashboard = () => {
                             </div>
                         </div>
                     </div>
-                    <CashflowChart />
-                    <RecentTransactions />
+                    <CashflowChart data={userData.cashflowData} />
+                    <RecentTransactions transactions={userData.recentTransactions.slice(0, 5)} />
                 </div>
 
                 {/* Right Column */}
                 <div className="space-y-6">
-                    <SavingPlans />
-                    <ExpenseBreakdown />
+                    <SavingPlans plans={userData.savingPlans} />
+                    <ExpenseBreakdown expenses={userData.expensesByCategory} />
                     {/* Promo Card */}
                     <div className="relative overflow-hidden rounded-xl bg-gray-900 p-6 text-white text-center">
                         <div className="z-10 relative">

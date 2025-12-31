@@ -1,10 +1,12 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Search, Bell, Mail, Settings, LogOut, User } from 'lucide-react';
-import { currentUser, messagesData } from '../data/mockData';
+import { useAuth } from '../context/AuthContext';
+import { messagesData } from '../data/mockData'; // We can keep messagesData static or move to context later
 import ProfileModal from '../components/dashboard/ProfileModal';
 import SettingsModal from '../components/dashboard/SettingsModal';
 
 const Header = ({ title = "Dashboard" }) => {
+    const { currentUser, logout } = useAuth();
     const [searchQuery, setSearchQuery] = useState('');
     const [showNotifications, setShowNotifications] = useState(false);
     const [showProfileMenu, setShowProfileMenu] = useState(false);
@@ -46,10 +48,9 @@ const Header = ({ title = "Dashboard" }) => {
 
     const handleSignOut = () => {
         setShowProfileMenu(false);
-        // Simulate sign out
         if (confirm("Are you sure you want to sign out?")) {
-            alert("You have been signed out.");
-            window.location.reload();
+            logout();
+            // App.jsx will handle redirection
         }
     };
 

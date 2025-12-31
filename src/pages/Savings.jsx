@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import MainLayout from '../layout/MainLayout';
-import { savingPlans } from '../data/mockData';
+import { useAuth } from '../context/AuthContext';
 import { Plus, Target, TrendingUp } from 'lucide-react';
 import { cn } from '../lib/utils';
 import SavingsModal from '../components/dashboard/SavingsModal';
 
 const Savings = () => {
+    const { userData } = useAuth();
+    const savingPlans = userData ? userData.savingPlans : [];
     const [modalState, setModalState] = useState({
         isOpen: false,
         type: null, // 'create', 'details', 'add'

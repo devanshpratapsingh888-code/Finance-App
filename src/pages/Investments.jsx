@@ -1,11 +1,20 @@
 import React from 'react';
 import MainLayout from '../layout/MainLayout';
-import { investmentsData } from '../data/mockData';
+import { useAuth } from '../context/AuthContext';
 import { TrendingUp, TrendingDown, PieChart as PieChartIcon, Activity } from 'lucide-react';
 import { cn } from '../lib/utils';
 import { BarChart, Bar, ResponsiveContainer, XAxis } from 'recharts';
 
 const Investments = () => {
+    const { userData, currentUser } = useAuth();
+    if (!userData) return null;
+    const { investmentsData } = userData;
+
+    const stockValue = investmentsData.filter(i => i.type === 'Stock' || i.type === 'ETF').reduce((acc, curr) => acc + (curr.quantity * curr.currentPrice), 0);
+    const cryptoValue = investmentsData.filter(i => i.type === 'Crypto').reduce((acc, curr) => acc + (curr.quantity * curr.currentPrice), 0);
+    const cashValue = currentUser.balance;
+    const totalValue = stockValue + cryptoValue + cashValue;
+
     return (
         <MainLayout title="Investments">
             <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
@@ -14,7 +23,7 @@ const Investments = () => {
                     <div className="mb-8">
                         <p className="text-sm text-gray-400">Total Portfolio Value</p>
                         <div className="flex items-end gap-4">
-                            <h2 className="text-4xl font-bold">$42,593.50</h2>
+                            <h2 className="text-4xl font-bold">${totalValue.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</h2>
                             <div className="flex items-center gap-1 rounded-full bg-green-500/20 px-2 py-1 text-sm font-medium text-green-400">
                                 <TrendingUp className="h-4 w-4" />
                                 <span>+2.4%</span>
@@ -25,15 +34,15 @@ const Investments = () => {
                     <div className="grid grid-cols-3 gap-4">
                         <div className="rounded-lg bg-gray-800 p-4">
                             <p className="mb-1 text-xs text-gray-400">Stocks</p>
-                            <h4 className="font-bold">$24,500</h4>
+                            <h4 className="font-bold">${stockValue.toLocaleString()}</h4>
                         </div>
                         <div className="rounded-lg bg-gray-800 p-4">
                             <p className="mb-1 text-xs text-gray-400">Crypto</p>
-                            <h4 className="font-bold">$12,400</h4>
+                            <h4 className="font-bold">${cryptoValue.toLocaleString()}</h4>
                         </div>
                         <div className="rounded-lg bg-gray-800 p-4">
                             <p className="mb-1 text-xs text-gray-400">Cash</p>
-                            <h4 className="font-bold">$5,693</h4>
+                            <h4 className="font-bold">${cashValue.toLocaleString()}</h4>
                         </div>
                     </div>
                 </div>

@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { recentTransactions } from '../../data/mockData';
 import { Film, Briefcase, ShoppingCart, Zap, Coffee } from 'lucide-react';
 import { cn } from '../../lib/utils';
 import TransactionModal from './TransactionModal';
@@ -12,7 +11,7 @@ const iconMap = {
     'coffee': Coffee
 };
 
-const RecentTransactions = () => {
+const RecentTransactions = ({ transactions = [] }) => {
     const [selectedTx, setSelectedTx] = useState(null);
 
     const handleViewAll = () => {
@@ -33,7 +32,7 @@ const RecentTransactions = () => {
             </div>
 
             <div className="space-y-6">
-                {recentTransactions.map((tx) => {
+                {transactions.map((tx) => {
                     const Icon = iconMap[tx.icon] || ShoppingCart;
                     return (
                         <div

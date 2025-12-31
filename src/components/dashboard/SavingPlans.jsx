@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
-import { savingPlans } from '../../data/mockData';
 import { Plus } from 'lucide-react';
 import { cn } from '../../lib/utils';
 import SavingsModal from './SavingsModal';
 
-const SavingPlans = () => {
+const SavingPlans = ({ plans = [] }) => {
     const [modalState, setModalState] = useState({
         isOpen: false,
         type: null,
@@ -32,7 +31,7 @@ const SavingPlans = () => {
             </div>
 
             <div className="space-y-5">
-                {savingPlans.map((plan) => {
+                {plans.map((plan) => {
                     const percentage = Math.round((plan.current / plan.target) * 100);
                     return (
                         <div

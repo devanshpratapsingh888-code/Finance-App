@@ -1,8 +1,8 @@
 import React from 'react';
-import { currentUser } from '../../data/mockData';
 import { CreditCard, Wifi } from 'lucide-react';
 
-const BalanceCard = () => {
+const BalanceCard = ({ currentUser }) => {
+    if (!currentUser) return null;
     return (
         <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-gray-900 to-gray-800 p-6 text-white shadow-lg">
             <div className="flex items-start justify-between">

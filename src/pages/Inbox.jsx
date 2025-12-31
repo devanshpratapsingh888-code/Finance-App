@@ -1,10 +1,14 @@
 import React from 'react';
 import MainLayout from '../layout/MainLayout';
-import { messagesData } from '../data/mockData';
+import { useAuth } from '../context/AuthContext';
 import { Mail, Star, Trash2 } from 'lucide-react';
 import { cn } from '../lib/utils';
 
 const Inbox = () => {
+    const { userData } = useAuth();
+    if (!userData) return null;
+    const { messagesData } = userData;
+
     return (
         <MainLayout title="Inbox">
             <div className="overflow-hidden rounded-xl border border-gray-100 bg-white shadow-sm">

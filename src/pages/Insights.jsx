@@ -1,9 +1,12 @@
 import React from 'react';
 import MainLayout from '../layout/MainLayout';
-import { insightsData } from '../data/mockData';
+import { useAuth } from '../context/AuthContext';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 
 const Insights = () => {
+    const { userData } = useAuth();
+    if (!userData) return null;
+    const { insightsData } = userData;
     return (
         <MainLayout title="Financial Insights">
             <div className="rounded-xl border border-gray-100 bg-white p-6 shadow-sm">

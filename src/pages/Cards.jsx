@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
 import MainLayout from '../layout/MainLayout';
-import { cardsData } from '../data/mockData';
+import { useAuth } from '../context/AuthContext';
 import { Plus, CreditCard, Lock, Eye } from 'lucide-react';
 import { cn } from '../lib/utils';
 import AddCardModal from '../components/dashboard/AddCardModal';
 
 const Cards = () => {
+    const { userData } = useAuth();
+    const cardsData = userData ? userData.cardsData : [];
+
     const [selectedCardId, setSelectedCardId] = useState(cardsData[0]?.id);
     const [showDetails, setShowDetails] = useState(false);
     const [isAddModalOpen, setIsAddModalOpen] = useState(false);

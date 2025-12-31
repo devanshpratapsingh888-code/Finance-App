@@ -1,8 +1,7 @@
 import React from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts';
-import { cashflowData } from '../../data/mockData';
 
-const CashflowChart = () => {
+const CashflowChart = ({ data = [] }) => {
     return (
         <div className="rounded-xl bg-white p-6 shadow-sm ring-1 ring-gray-100">
             <div className="mb-6 flex items-center justify-between">
@@ -16,7 +15,7 @@ const CashflowChart = () => {
             <div className="h-[300px] w-full">
                 <ResponsiveContainer width="100%" height="100%">
                     <BarChart
-                        data={cashflowData}
+                        data={data}
                         margin={{ top: 20, right: 30, left: 0, bottom: 5 }}
                     >
                         <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#E5E7EB" />

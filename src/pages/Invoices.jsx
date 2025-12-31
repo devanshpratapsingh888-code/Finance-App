@@ -1,10 +1,13 @@
 import React from 'react';
 import MainLayout from '../layout/MainLayout';
-import { invoicesData } from '../data/mockData';
+import { useAuth } from '../context/AuthContext';
 import { Download, FileText, Filter } from 'lucide-react';
 import { cn } from '../lib/utils';
 
 const Invoices = () => {
+    const { userData } = useAuth();
+    if (!userData) return null;
+    const { invoicesData } = userData;
     const handleDownloadInvoice = (invoice) => {
         const content = `
             INVOICE #${invoice.id}

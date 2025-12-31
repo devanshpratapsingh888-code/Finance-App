@@ -1,10 +1,14 @@
 import React from 'react';
 import MainLayout from '../layout/MainLayout';
-import { promosData } from '../data/mockData';
+import { useAuth } from '../context/AuthContext';
 import { Gift, ArrowRight } from 'lucide-react';
 import { cn } from '../lib/utils';
 
 const Promos = () => {
+    const { userData } = useAuth();
+    if (!userData) return null;
+    const { promosData } = userData;
+
     return (
         <MainLayout title="Promotions">
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">

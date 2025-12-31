@@ -1,22 +1,16 @@
 import React, { useState } from 'react';
 import MainLayout from '../layout/MainLayout';
-import { recentTransactions } from '../data/mockData';
 import { Search, Filter, ArrowUpRight, ArrowDownLeft } from 'lucide-react';
 import { cn } from '../lib/utils';
 import TransactionModal from '../components/dashboard/TransactionModal';
-
-// Enhanced mock data generator for more items
-const allTransactions = [
-    ...recentTransactions,
-    { id: 6, name: "Amazon Purchase", date: "18 Dec 2024", amount: -120.50, status: "Completed", type: "expense", category: "Shopping", icon: "shopping-cart" },
-    { id: 7, name: "Freelance Project", date: "15 Dec 2024", amount: 1200.00, status: "Completed", type: "income", category: "Freelance", icon: "briefcase" },
-    { id: 8, name: "Gym Membership", date: "12 Dec 2024", amount: -45.00, status: "Completed", type: "expense", category: "Health", icon: "zap" },
-    { id: 9, name: "Mobile Bill", date: "10 Dec 2024", amount: -60.00, status: "Completed", type: "expense", category: "Utilities", icon: "zap" },
-    { id: 10, name: "Dividend Payout", date: "05 Dec 2024", amount: 150.25, status: "Completed", type: "income", category: "Investment", icon: "trending-up" },
-    { id: 11, name: "Uber Ride", date: "04 Dec 2024", amount: -18.40, status: "Cancelled", type: "expense", category: "Transport", icon: "car" },
-];
+import { useAuth } from '../context/AuthContext';
 
 const Transactions = () => {
+    const { userData } = useAuth();
+    // Safety check
+    if (!userData) return null;
+
+    const allTransactions = userData.recentTransactions || [];
     const [filter, setFilter] = useState('All');
     const [searchTerm, setSearchTerm] = useState('');
     const [selectedTx, setSelectedTx] = useState(null);
