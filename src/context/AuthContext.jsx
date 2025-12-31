@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { authenticateUser, initializeUser, initializeDemoUser, getLoggedInUserId, setLoggedInUserId, getUserData } from '../lib/dataManager';
+import { authenticateUser, initializeUser, initializeTestUsers, getLoggedInUserId, setLoggedInUserId, getUserData } from '../lib/dataManager';
 
 const AuthContext = createContext();
 
@@ -11,8 +11,8 @@ export const AuthProvider = ({ children }) => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        // Init demo user on first load
-        initializeDemoUser();
+        // Init test users on first load
+        initializeTestUsers();
 
         // Check for existing session
         const savedUserId = getLoggedInUserId();
