@@ -1,7 +1,7 @@
-import React from 'react';
+import React from 'react'; // Sidebar component
 import { navItems } from '../data/mockData';
 import { cn } from '../lib/utils';
-import { Crown } from 'lucide-react';
+
 
 const Sidebar = ({ activePath = "/" }) => {
     return (
@@ -37,16 +37,7 @@ const Sidebar = ({ activePath = "/" }) => {
                 })}
             </nav>
 
-            <div className="absolute bottom-6 left-4 right-4 rounded-2xl bg-gray-900 p-4 text-white">
-                <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-full bg-gray-800">
-                    <Crown className="h-5 w-5 text-yellow-400" />
-                </div>
-                <h4 className="mb-1 text-sm font-semibold">Upgrade to Pro</h4>
-                <p className="mb-3 text-xs text-gray-400">Get all features and unlimited access.</p>
-                <button className="w-full rounded-lg bg-primary py-2 text-xs font-semibold text-white transition-opacity hover:opacity-90">
-                    Get Pro
-                </button>
-            </div>
+
         </aside>
     );
 };
